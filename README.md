@@ -158,7 +158,3 @@ For further questions or inquiries, feel free to reach out:
 <a href="https://instagram.com/_rizqifajar_" target="_blank">
   <img src="https://img.shields.io/badge/Instagram-_rizqifajar_-E4405F?style=for-the-badge&logo=instagram&logoColor=white" />
 </a>
-&nbsp;
-<a href="http://wa.me/6289644460579" target="_blank">
-  <img src="https://img.shields.io/badge/WhatsApp-Chat-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
-</a>
