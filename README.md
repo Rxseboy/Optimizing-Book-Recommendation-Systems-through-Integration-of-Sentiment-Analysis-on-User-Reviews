@@ -66,8 +66,8 @@ Traditional recommendation systems rely solely on numerical ratings, ignoring th
 
 | Metric                    | Value         |
 |---------------------------|---------------|
-| KNN Sentiment Accuracy    | ~0.70–0.75    |
-| Sentiment F1 Score        | ~0.70–0.75    |
+| KNN Sentiment Accuracy    | ~0.70–0.85    |
+| Sentiment F1 Score        | ~0.70–0.85    |
 | Recommendation RMSE       | Computed at runtime |
 | Recommendation MAE        | Computed at runtime |
 
@@ -142,3 +142,23 @@ The notebook contains detailed EDA, visualizations (word clouds, sentiment distr
 ## 📄 License
 
 This project is part of an academic thesis (Tugas Akhir). See the `docs/` directory for the related IEEE conference paper and thesis proposal.
+
+## 📬 Contact
+
+For further questions or inquiries, feel free to reach out:
+
+**RIZQI FAJAR**
+
+📧 **Email:**  
+<a href="mailto:rizqyfajar777@gmail.com">
+  <img src="https://img.shields.io/badge/Email-rizqyfajar777%40gmail.com-red?style=for-the-badge&logo=gmail&logoColor=white" />
+</a>
+
+🌐 **Social Profiles:**  
+<a href="https://instagram.com/_rizqifajar_" target="_blank">
+  <img src="https://img.shields.io/badge/Instagram-_rizqifajar_-E4405F?style=for-the-badge&logo=instagram&logoColor=white" />
+</a>
+&nbsp;
+<a href="http://wa.me/6289644460579" target="_blank">
+  <img src="https://img.shields.io/badge/WhatsApp-Chat-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
+</a>
