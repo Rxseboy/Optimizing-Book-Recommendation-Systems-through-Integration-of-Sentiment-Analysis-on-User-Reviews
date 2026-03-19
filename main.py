@@ -382,16 +382,17 @@ class SentimentAnalyzer:
         no_rating = dataset[dataset["ratings"] == "No Rating"].copy()
         no_rating = no_rating.dropna(subset=["cleaned_reviews"])
 
-        # Fit TF-IDF on combined training + no-rating reviews
+        # Use the SAME CountVectorizer that trained the KNN model
+        X_no_rating = self.vectorizer.transform(no_rating["cleaned_reviews"])
+        preds = self.model.predict(X_no_rating)
+        no_rating["sentiment"] = [reverse_map[p] for p in preds]
+
+        # Build a TF-IDF vectorizer for recommendation sentiment scoring
         all_reviews = pd.concat(
             [self._X_train, no_rating["cleaned_reviews"]], ignore_index=True
         )
         self.word_vectorizer = TfidfVectorizer(max_features=6852, stop_words="english")
         self.word_vectorizer.fit(all_reviews)
-
-        X_no_rating = self.word_vectorizer.transform(no_rating["cleaned_reviews"])
-        preds = self.model.predict(X_no_rating)
-        no_rating["sentiment"] = [reverse_map[p] for p in preds]
 
         log.info("Predicted sentiment for %d 'No Rating' reviews", len(no_rating))
         return no_rating
@@ -540,12 +541,12 @@ class RecommendationEngine:
         # Remove zero‑prediction items
         recs = recs[recs["predicted_ratings"] > 1.0]
 
-        # Add sentiment scores
+        # Add sentiment scores using CountVectorizer (same as KNN training)
         def _get_sentiment_score(book_name: str) -> float:
             reviews = dataset[dataset["book_names"] == book_name]["reviews"].tolist()
             if not reviews:
                 return 0.5
-            features = sentiment_analyzer.word_vectorizer.transform(reviews)
+            features = sentiment_analyzer.vectorizer.transform(reviews)
             return sentiment_analyzer.model.predict(features).mean()
 
         recs["sentiment_score"] = recs["book_names"].apply(_get_sentiment_score)
