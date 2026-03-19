@@ -156,5 +156,5 @@ For further questions or inquiries, feel free to reach out:
 
 🌐 **Social Profiles:**  
 <a href="https://instagram.com/_rizqifajar_" target="_blank">
-  <img src="https://img.shields.io/badge/Instagram-%5Frizqifajar%5F-E4405F?style=for-the-badge&logo=instagram&logoColor=white&labelColor=555" />
+  <img src="https://img.shields.io/badge/Instagram-__rizqifajar__-E4405F?style=for-the-badge&logo=instagram&logoColor=white" />
 </a>
