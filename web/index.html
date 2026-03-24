@@ -45,14 +45,14 @@
     <span class="hero-badge"><i class="fa-solid fa-flask"></i> Research Project · Machine Learning</span>
     <h1>Sentiment-Powered<br /><em>Book Recommendations</em></h1>
     <p class="hero-sub">
-      Integrating <strong>KNN sentiment analysis</strong> on 18,984 Goodreads reviews with
+      Integrating <strong>KNN sentiment analysis</strong> on 16,598 Goodreads reviews with
       <strong>user–user collaborative filtering</strong> to produce smarter, feeling-aware recommendations.
     </p>
     <div class="hero-kpi" id="heroKPI">
-      <div class="kpi-item"><span class="kpi-n" data-target="18984">0</span><span class="kpi-l">Reviews</span></div>
-      <div class="kpi-item"><span class="kpi-n" data-target="9872">0</span><span class="kpi-l">Users</span></div>
-      <div class="kpi-item"><span class="kpi-n" data-target="13">0</span><span class="kpi-l">Books</span></div>
-      <div class="kpi-item"><span class="kpi-n kpi-pct" data-target="91.42">0</span><span class="kpi-l">KNN Accuracy</span></div>
+      <div class="kpi-item"><span class="kpi-n" data-target="16598">0</span><span class="kpi-l">Reviews</span></div>
+      <div class="kpi-item"><span class="kpi-n" data-target="349">0</span><span class="kpi-l">Users</span></div>
+      <div class="kpi-item"><span class="kpi-n" data-target="11">0</span><span class="kpi-l">Books</span></div>
+      <div class="kpi-item"><span class="kpi-n kpi-pct" data-target="85.81">0</span><span class="kpi-l">KNN Accuracy</span></div>
     </div>
     <div class="hero-cta">
       <a href="#catalog" class="btn-primary">Explore Catalog <i class="fa-solid fa-arrow-down"></i></a>
@@ -75,7 +75,7 @@
         <div class="pipe-icon"><i class="fa-solid fa-database"></i></div>
         <h3>Data Loading &amp; Cleaning</h3>
         <p>Language detection with <code>langdetect</code>, word-count filter, deduplication. English-only reviews of Carissa Broadbent books are retained.</p>
-        <div class="pipe-chip"><i class="fa-solid fa-check"></i> 18,984 → 12,439 reviews</div>
+        <div class="pipe-chip"><i class="fa-solid fa-check"></i> 16,598 → 3,312 reviews</div>
       </div>
 
       <div class="pipe-arrow"><i class="fa-solid fa-chevron-right"></i></div>
@@ -94,8 +94,8 @@
         <div class="pipe-num">03</div>
         <div class="pipe-icon"><i class="fa-solid fa-heart-pulse"></i></div>
         <h3>Sentiment Analysis</h3>
-        <p>KNN classifier on <code>CountVectorizer</code> features · SMOTE oversampling · optimal K search · predicts sentiment for 'No Rating' reviews.</p>
-        <div class="pipe-chip accent"><i class="fa-solid fa-star"></i> 91.42% Accuracy · F1 0.91</div>
+        <p>KNN classifier on <code>TF-IDF Vectorizer</code> features · SMOTE oversampling · optimal K search · predicts sentiment for 'No Rating' reviews.</p>
+        <div class="pipe-chip accent"><i class="fa-solid fa-star"></i> 85.81% Accuracy · F1 0.86</div>
       </div>
 
       <div class="pipe-arrow"><i class="fa-solid fa-chevron-right"></i></div>
@@ -105,7 +105,7 @@
         <div class="pipe-icon"><i class="fa-solid fa-users"></i></div>
         <h3>Collaborative Filtering</h3>
         <p>User–user cosine similarity matrix · top-20 neighbour selection · mean-centred predicted ratings. Filters active users (≥5 interactions).</p>
-        <div class="pipe-chip"><i class="fa-solid fa-check"></i> RMSE 0.68 · MAE 0.42</div>
+        <div class="pipe-chip"><i class="fa-solid fa-check"></i> RMSE 1.25 · MAE 0.45</div>
       </div>
 
       <div class="pipe-arrow"><i class="fa-solid fa-chevron-right"></i></div>
@@ -197,11 +197,11 @@
   <div class="container">
     <div class="section-hd">
       <h2>Analyzed Book Catalog</h2>
-      <p>All 13 Carissa Broadbent titles present in the Goodreads dataset</p>
+      <p>All 11 Carissa Broadbent titles present in the Goodreads dataset</p>
     </div>
 
     <div class="filter-row">
-      <button class="fbtn active" data-filter="all">All <span class="fbtn-count" id="count-all">13</span></button>
+      <button class="fbtn active" data-filter="all">All <span class="fbtn-count" id="count-all">11</span></button>
       <button class="fbtn" data-filter="Crowns of Nyaxia">Crowns of Nyaxia</button>
       <button class="fbtn" data-filter="The War of Lost Hearts">War of Lost Hearts</button>
       <button class="fbtn" data-filter="standalone">Standalones</button>
