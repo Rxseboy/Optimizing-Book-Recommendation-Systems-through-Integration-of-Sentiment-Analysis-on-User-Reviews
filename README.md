@@ -82,11 +82,20 @@ Traditional recommendation systems rely solely on numerical ratings, ignoring th
 
 ## 🖼️ Application Preview
 
+### High-End UI & Intelligence
+![NovelSense Hero](./docs/assets/hero_section.png)
+
 ### The Intelligence Pipeline
 ![Pipeline Section](./docs/assets/pipeline_overview.png)
 
-### Model Performance
+### Model Performance & Metrics
 ![Metrics Section](./docs/assets/performance_metrics.png)
+
+### Interactive Book Catalog
+![Catalog Section](./docs/assets/catalog_section.png)
+
+### Deep Dataset Insights (Modal)
+![Modal Details](./docs/assets/modal_details.png)
 
 ### Live Recommendation Demo
 ![Demo Section](./docs/assets/recommendation_demo.png)
