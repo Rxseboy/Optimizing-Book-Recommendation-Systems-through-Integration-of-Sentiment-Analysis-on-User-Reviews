@@ -38,8 +38,8 @@ code{font-family:'Courier New',monospace;font-size:.9em;background:rgba(255,255,
 /* Utilities */
 .container{max-width:1240px;margin:0 auto;padding:0 2rem}
 .glass-panel{background:var(--glass);backdrop-filter:blur(16px);border:1px solid var(--border)}
-.section{padding:6rem 0}
-.section-hd{text-align:center;margin-bottom:3.5rem}
+.section{padding:4rem 0}
+.section-hd{text-align:center;margin-bottom:2rem}
 .section-hd h2{
   font-size:clamp(2rem,4vw,2.8rem);
   background:linear-gradient(135deg,var(--gold2),var(--gold));
@@ -60,7 +60,7 @@ code{font-family:'Courier New',monospace;font-size:.9em;background:rgba(255,255,
 }
 .navbar.scrolled{box-shadow:0 4px 30px rgba(0,0,0,.4)}
 .nav-inner{
-  max-width:1240px;margin:0 auto;padding:.9rem 2rem;
+  max-width:1240px;margin:0 auto;padding:.7rem 2rem;
   display:flex;align-items:center;gap:2rem;
 }
 .logo-link{
@@ -79,7 +79,7 @@ code{font-family:'Courier New',monospace;font-size:.9em;background:rgba(255,255,
 /* ── HERO ── */
 .hero{
   min-height:100vh;display:flex;align-items:center;
-  position:relative;overflow:hidden;padding:7rem 2rem 3rem;
+  position:relative;overflow:hidden;padding:4.5rem 2rem 3rem;
 }
 .hero-bg{
   position:absolute;inset:0;z-index:0;
@@ -92,32 +92,32 @@ code{font-family:'Courier New',monospace;font-size:.9em;background:rgba(255,255,
 .hero-badge{
   display:inline-flex;align-items:center;gap:.5rem;
   background:rgba(212,168,67,.1);border:1px solid rgba(212,168,67,.25);
-  color:var(--gold);font-size:.82rem;font-weight:600;
+  color:var(--gold);font-size:.8rem;font-weight:600;
   letter-spacing:.8px;text-transform:uppercase;
-  padding:.4rem 1.2rem;border-radius:50px;margin-bottom:1.8rem;
+  padding:.35rem 1.1rem;border-radius:50px;margin-bottom:1rem;
 }
 .hero h1{
-  font-size:clamp(2.8rem,7vw,5rem);line-height:1.1;
-  margin-bottom:1.5rem;
+  font-size:clamp(2.5rem,6.5vw,4.2rem);line-height:1.1;
+  margin-bottom:.8rem;
 }
 .hero h1 em{
   background:linear-gradient(135deg,var(--gold2) 0%,var(--gold) 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   font-style:normal;
 }
-.hero-sub{color:var(--muted);font-size:1.15rem;max-width:600px;margin:0 auto 2.5rem;font-weight:300}
+.hero-sub{color:var(--muted);font-size:1.1rem;max-width:620px;margin:0 auto 1.5rem;font-weight:300}
 .hero-sub strong{color:var(--text)}
 
 .hero-kpi{
-  display:flex;justify-content:center;flex-wrap:wrap;gap:2.5rem;
-  padding:2rem;border-radius:var(--radius);
-  background:rgba(255,255,255,.03);border:1px solid var(--border);
-  margin-bottom:2.5rem;
+  display:flex;justify-content:center;flex-wrap:wrap;gap:3rem;
+  padding:1.4rem 2rem;border-radius:var(--radius);
+  background:var(--glass);border:1px solid var(--border);
+  margin-bottom:1.8rem;
 }
 .kpi-item{text-align:center}
 .kpi-n{
   display:block;font-family:'Playfair Display',serif;
-  font-size:2.4rem;font-weight:700;color:var(--gold);
+  font-size:2.1rem;font-weight:700;color:var(--gold);
   line-height:1;
 }
 .kpi-pct::after{content:'%'}
@@ -127,14 +127,14 @@ code{font-family:'Courier New',monospace;font-size:.9em;background:rgba(255,255,
 .btn-primary{
   display:inline-flex;align-items:center;gap:.7rem;
   background:linear-gradient(135deg,var(--gold2),var(--gold));
-  color:#0a0808;font-weight:700;padding:.9rem 2rem;border-radius:8px;
+  color:#0a0808;font-weight:700;padding:.85rem 1.8rem;border-radius:8px;
   box-shadow:0 8px 20px rgba(212,168,67,.3);transition:all .3s var(--tf);
 }
 .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(212,168,67,.4)}
 .btn-ghost{
   display:inline-flex;align-items:center;gap:.7rem;
   border:1px solid var(--border);color:var(--text);font-weight:500;
-  padding:.9rem 2rem;border-radius:8px;transition:all .3s;
+  padding:.85rem 1.8rem;border-radius:8px;transition:all .3s;
 }
 .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
 
@@ -151,7 +151,7 @@ code{font-family:'Courier New',monospace;font-size:.9em;background:rgba(255,255,
 }
 .pipe-step{
   background:var(--glass);border:1px solid var(--border);
-  border-radius:var(--radius);padding:2rem 1.5rem;
+  border-radius:var(--radius);padding:1.25rem 1.1rem;
   transition:transform .3s,border-color .3s,box-shadow .3s;
 }
 .pipe-step:hover{transform:translateY(-6px);border-color:rgba(212,168,67,.25);box-shadow:var(--shadow)}
@@ -165,13 +165,13 @@ code{font-family:'Courier New',monospace;font-size:.9em;background:rgba(255,255,
   color:var(--gold);text-transform:uppercase;margin-bottom:.8rem;
 }
 .pipe-icon{
-  width:52px;height:52px;border-radius:12px;
+  width:48px;height:48px;border-radius:12px;
   background:rgba(212,168,67,.1);color:var(--gold);
   display:flex;align-items:center;justify-content:center;
-  font-size:1.4rem;margin-bottom:1.2rem;
+  font-size:1.25rem;margin-bottom:.7rem;
 }
-.pipe-step h3{font-family:'Inter',sans-serif;font-size:1.05rem;margin-bottom:.6rem}
-.pipe-step p{font-size:.87rem;color:var(--muted);line-height:1.6}
+.pipe-step h3{font-family:'Inter',sans-serif;font-size:1rem;margin-bottom:.5rem}
+.pipe-step p{font-size:.85rem;color:var(--muted);line-height:1.6}
 .pipe-chip{
   display:inline-flex;align-items:center;gap:.4rem;
   margin-top:1rem;padding:.3rem .8rem;border-radius:30px;
@@ -189,11 +189,11 @@ code{font-family:'Courier New',monospace;font-size:.9em;background:rgba(255,255,
 .metrics-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:1.5rem;margin-bottom:4rem;
+  gap:1.2rem;margin-bottom:3rem;
 }
 .metric-card{
   background:var(--bg2);border:1px solid var(--border);
-  border-radius:var(--radius);padding:2rem 1.5rem;
+  border-radius:var(--radius);padding:1.4rem 1.1rem;
   text-align:center;transition:.3s;
 }
 .metric-card:hover,.glow-card{
@@ -201,15 +201,15 @@ code{font-family:'Courier New',monospace;font-size:.9em;background:rgba(255,255,
   box-shadow:0 0 25px rgba(212,168,67,.08);
 }
 .metrics-section .glow-card{background:rgba(212,168,67,.04)}
-.mc-icon{font-size:1.5rem;color:var(--gold);margin-bottom:1rem}
-.mc-val{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--text)}
+.mc-icon{font-size:1.4rem;color:var(--gold);margin-bottom:.8rem}
+.mc-val{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--text)}
 .mc-unit{font-size:1.4rem}
 .mc-label{font-weight:600;margin:.4rem 0 .2rem}
 .mc-sub{font-size:.82rem;color:var(--muted)}
 
 .sentiment-vis{text-align:center;max-width:680px;margin:0 auto}
-.sentiment-vis h3{margin-bottom:2rem;font-family:'Inter';font-size:1.2rem}
-.sent-bars{display:flex;flex-direction:column;gap:1.2rem}
+.sentiment-vis h3{margin-bottom:1.2rem;font-family:'Inter';font-size:1.1rem}
+.sent-bars{display:flex;flex-direction:column;gap:1rem}
 .sent-bar-wrap{display:flex;align-items:center;gap:1rem}
 .sent-label{width:90px;text-align:right;font-size:.9rem;color:var(--muted)}
 .sent-track{flex:1;height:10px;background:rgba(255,255,255,.05);border-radius:10px;overflow:hidden}
@@ -263,7 +263,7 @@ code{font-family:'Courier New',monospace;font-size:.9em;background:rgba(255,255,
   border-color:rgba(212,168,67,.3);
   box-shadow:0 20px 40px rgba(0,0,0,.5);
 }
-.book-cover-wrap{position:relative;overflow:hidden;height:340px}
+.book-cover-wrap{position:relative;overflow:hidden;height:310px}
 .book-cover{
   width:100%;height:100%;object-fit:cover;
   transition:transform .4s var(--tf);
@@ -279,10 +279,10 @@ code{font-family:'Courier New',monospace;font-size:.9em;background:rgba(255,255,
   color:var(--gold);font-size:.7rem;font-weight:600;
   padding:.2rem .6rem;border-radius:20px;letter-spacing:.5px;
 }
-.book-info{padding:1.2rem;flex:1;display:flex;flex-direction:column}
+.book-info{padding:1rem;flex:1;display:flex;flex-direction:column}
 .book-title{
-  font-family:'Playfair Display',serif;font-size:1.1rem;
-  margin-bottom:.8rem;line-height:1.3;
+  font-family:'Playfair Display',serif;font-size:1.05rem;
+  margin-bottom:.6rem;line-height:1.3;
 }
 .book-meta{
   margin-top:auto;display:flex;justify-content:space-between;
@@ -336,19 +336,19 @@ code{font-family:'Courier New',monospace;font-size:.9em;background:rgba(255,255,
 .rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem}
 .rec-card{
   background:var(--bg2);border:1px solid var(--border);
-  border-radius:12px;padding:1.2rem;display:flex;gap:1rem;
+  border-radius:12px;padding:1rem;display:flex;gap:1rem;
   align-items:center;
   animation:fadeUp .35s ease forwards;opacity:0;
 }
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 .rec-rank{
-  font-family:'Playfair Display',serif;font-size:2rem;
-  color:var(--gold);font-weight:700;width:36px;flex-shrink:0;
+  font-family:'Playfair Display',serif;font-size:1.8rem;
+  color:var(--gold);font-weight:700;width:32px;flex-shrink:0;
   line-height:1;
 }
-.rec-img{width:52px;height:76px;object-fit:cover;border-radius:5px;flex-shrink:0}
+.rec-img{width:48px;height:70px;object-fit:cover;border-radius:5px;flex-shrink:0}
 .rec-info{flex:1;min-width:0}
-.rec-title{font-size:.95rem;font-weight:600;margin-bottom:.5rem;line-height:1.3}
+.rec-title{font-size:.9rem;font-weight:600;margin-bottom:.4rem;line-height:1.3}
 .rec-scores{display:flex;flex-direction:column;gap:.25rem}
 .rec-bar-wrap{display:flex;align-items:center;gap:.5rem;font-size:.75rem}
 .rec-bar-lbl{color:var(--muted);width:70px;flex-shrink:0}
@@ -400,7 +400,7 @@ code{font-family:'Courier New',monospace;font-size:.9em;background:rgba(255,255,
 .modal-close:hover{background:var(--gold);color:#000}
 .modal-layout{display:grid;grid-template-columns:260px 1fr;gap:0}
 .modal-left{
-  padding:2rem 1.5rem 2rem 2rem;
+  padding:1.8rem 1.4rem 1.8rem 1.8rem;
   border-right:1px solid var(--border);
 }
 .modal-left>img{
@@ -420,7 +420,7 @@ code{font-family:'Courier New',monospace;font-size:.9em;background:rgba(255,255,
 .ds-k{color:var(--muted)}
 .ds-v{font-weight:600;color:var(--gold)}
 
-.modal-right{padding:2.5rem 2.5rem 2.5rem 2rem}
+.modal-right{padding:2.2rem 2.2rem 2.2rem 1.8rem}
 .modal-series{
   display:inline-block;background:rgba(212,168,67,.1);
   border:1px solid rgba(212,168,67,.25);color:var(--gold);

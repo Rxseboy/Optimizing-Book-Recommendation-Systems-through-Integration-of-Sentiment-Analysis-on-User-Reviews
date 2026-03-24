@@ -2,6 +2,13 @@
 
 A machine learning pipeline that integrates **Sentiment Analysis** of Goodreads book reviews with a **Collaborative Filtering Recommendation System** to provide sentiment-enhanced book recommendations.
 
+## 🚀 Live Demo
+
+**Check out the live interactive application on Hugging Face Spaces:**  
+👉 **[NovelSense - Book Recommendation System](https://huggingface.co/spaces/RizqiFajar/Book-Recommendation-System)**
+
+![NovelSense Hero Section](./web/assets/hero_section.png)
+
 ## 📋 Objective
 
 Build a recommendation system that goes beyond traditional collaborative filtering by incorporating **review sentiment** into the ranking algorithm. This produces more meaningful recommendations by weighting books that not only match user preferences but also have overwhelmingly positive reader sentiment.
@@ -29,7 +36,7 @@ Traditional recommendation systems rely solely on numerical ratings, ignoring th
 │ TF-IDF Vectorizer   │     │ Cosine Similarity        │
 │ ↓                   │     │ ↓                        │
 │ KNN Classifier      │     │ Predicted Ratings        │
-│ (SMOTE + CountVec)  │     │                          │
+│ (SMOTE + TF-IDF)    │     │                          │
 └─────────┬───────────┘     └────────────┬─────────────┘
           │                              │
           └──────────┬───────────────────┘
@@ -37,8 +44,8 @@ Traditional recommendation systems rely solely on numerical ratings, ignoring th
       ┌────────────────────────────────┐
       │  SENTIMENT-ENHANCED RANKING   │
       │                                │
-      │  Score = 1×Rating + 2×Sentiment│
-      │  → Top-N Recommendations       │
+      │  Score = 0.85×Rating + 0.15×Sen│
+      │  → Top-6 Recommendations       │
       └────────────────────────────────┘
 ```
 
@@ -51,27 +58,38 @@ Traditional recommendation systems rely solely on numerical ratings, ignoring th
 | NLP              | NLTK (tokenization, lemmatization, POS tagging)     |
 | Language Detection| langdetect                                         |
 | ML / Classification | scikit-learn (KNN), imbalanced-learn (SMOTE)     |
-| Vectorization    | CountVectorizer, TF-IDF                             |
+| Vectorization    | TF-IDF Vectorizer                                   |
 | Similarity       | Cosine Similarity (sklearn pairwise_distances)      |
 | Visualization    | Matplotlib, Seaborn, WordCloud                      |
 
 ## 📊 Dataset
 
 - **Source**: Goodreads book reviews of Carissa Broadbent's works
-- **Size**: ~18,000+ raw reviews → ~16,600 after cleaning
+- **Size**: ~18,000+ raw reviews → ~16,600 after deduplication → **3,312 English reviews**
 - **Columns**: `authors`, `book_names`, `usernames`, `ratings`, `reviews`
-- **Books**: 13 titles including *The Serpent and the Wings of Night*, *Daughter of No Worlds*, and more
+- **Books**: 11 titles including *The Serpent and the Wings of Night*, *Daughter of No Worlds*, and more
 
 ## 📈 Key Results
 
 | Metric                    | Value         |
 |---------------------------|---------------|
-| KNN Sentiment Accuracy    | ~0.70–0.85    |
-| Sentiment F1 Score        | ~0.70–0.85    |
-| Recommendation RMSE       | Computed at runtime |
-| Recommendation MAE        | Computed at runtime |
+| KNN Sentiment Accuracy    | **85.81%**    |
+| Sentiment F1 Score        | **0.8576**    |
+| Recommendation RMSE       | **1.2499**    |
+| Recommendation MAE        | **0.4483**    |
 
-> **Note**: Exact metrics depend on the random seed and dataset split. Run the pipeline to see current values.
+> **Note**: These metrics are generated dynamically by the latest pipeline run.
+
+## 🖼️ Application Preview
+
+### The Intelligence Pipeline
+![Pipeline Section](./web/assets/pipeline_overview.png)
+
+### Model Performance
+![Metrics Section](./web/assets/performance_metrics.png)
+
+### Live Recommendation Demo
+![Demo Section](./web/assets/recommendation_demo.png)
 
 ## 📁 Project Structure
 
@@ -85,11 +103,17 @@ Traditional recommendation systems rely solely on numerical ratings, ignoring th
 │   ├── knn_model.pkl
 │   ├── word_vectorizer.pkl
 │   └── user_final_rating.pkl
+├── web/                    # Static Web Application
+│   ├── index.html
+│   ├── style.css
+│   ├── app.js
+│   └── data/               # Exported JSON metrics/recs
 ├── main.py                 # Production pipeline
+├── export_app_data.py      # Web data exporter
 ├── notebook.ipynb          # Exploration & EDA
 ├── requirements.txt
-├── .gitignore
-└── README.md
+├── README.md
+└── .gitignore
 ```
 
 ## 🚀 How to Run
@@ -107,61 +131,36 @@ pip install -r requirements.txt
 
 ```bash
 python main.py
+python export_app_data.py
 ```
 
 This will:
 1. Load and clean the Goodreads dataset
-2. Train the KNN sentiment classifier
-3. Predict sentiment for unrated reviews
-4. Build the collaborative filtering model
-5. Generate sentiment-enhanced recommendations
-6. Save trained models to `model/`
-
-### Explore in Notebook
-
-```bash
-jupyter notebook notebook.ipynb
-```
-
-The notebook contains detailed EDA, visualizations (word clouds, sentiment distribution, confusion matrices), and step-by-step explanations of the methodology.
+2. Train the KNN sentiment classifier with **TF-IDF**
+3. Build the collaborative filtering model
+4. Export JSON data for the web dashboard to `web/data/`
 
 ## 📝 Approach Summary
 
-1. **Data Cleaning**: Filtered for English reviews only (using `langdetect`), removed short reviews (<2 words), dropped duplicates and placeholder titles.
+1. **Data Cleaning**: Filtered for English reviews only (using `langdetect`), removed duplicates, and focused on relevant interactions.
 
-2. **Sentiment Labeling**: Mapped ratings to sentiment: 4–5★ → positive, 1–2★ → negative, 3★/No Rating → undecided.
+2. **Sentiment Preprocessing**: Applied a multi-step NLP pipeline — contraction expansion, noise removal, tokenization, and multi-POS lemmatization via NLTK.
 
-3. **Text Preprocessing**: Applied a multi-step NLP pipeline — lowercasing, contraction expansion, URL/emoji/punctuation removal, tokenization, stopword removal, multi-POS lemmatization, and noun extraction.
+3. **Sentiment Classification**: Trained a KNN classifier on **TF-IDF Vectorizer** features with SMOTE oversampling to handle class imbalance.
 
-4. **Sentiment Classification**: Trained a KNN classifier on CountVectorizer features with SMOTE oversampling, optimizing K through accuracy sweep. Used the model to predict sentiment for "No Rating" reviews.
+4. **Collaborative Filtering**: Built a user–user similarity matrix using cosine distance on mean-centered ratings.
 
-5. **Collaborative Filtering**: Built a user–user similarity matrix using cosine distance on mean-centered ratings, then generated predicted ratings through matrix multiplication.
-
-6. **Sentiment-Enhanced Ranking**: Combined predicted ratings with sentiment scores using a weighted formula: `Score = 1 × Predicted Rating + 2 × Sentiment Score`, producing the final recommendation list.
+5. **Hybrid Ranking**: Combined predicted ratings with sentiment scores using a weighted formula (85% Rating, 15% Sentiment) to produce personalized top-picks.
 
 ## 🚀 Deployment
 
-The web application is designed to be lightweight and can be deployed easily:
+The web application is hosted on **Hugging Face Spaces** using the **Static HTML** SDK.
 
-### Option 1: Hugging Face Spaces (Highly Recommended)
-1. **Create a Space**: Go to [huggingface.co/new-space](https://huggingface.co/new-space).
-2. **Setup**:
-   - Name: `book-recommendation-system` (or any name).
-   - SDK: Select **Static HTML**.
-   - Public/Private: Your choice (Public is best for portfolio).
-3. **Upload Files**:
-   - Inside your new Space, click **"Files and versions"** > **"Add file"** > **"Upload files"**.
-   - Upload all files inside the `web/` folder (`index.html`, `style.css`, `app.js`) and the `web/data/` folder.
-   - **Important**: The `index.html` must be at the root of the Space.
-4. **Done**: Your Space will build and be live in seconds!
-
-### Option 2: Vercel
-1. Push this repository to GitHub and import it to [Vercel](https://vercel.com).
-2. It will use the `vercel.json` in this repo to serve the `web/` folder.
-
-### Option 3: Local Development
+### Deployment via Git Subtree
+To deploy only the `web/` folder directly to the Space:
 ```bash
-python -m http.server -d web 8000
+git remote add hf https://huggingface.co/spaces/YOUR_USERNAME/YOUR_SPACE
+git subtree push --prefix web hf main
 ```
 
 ## 📄 License
