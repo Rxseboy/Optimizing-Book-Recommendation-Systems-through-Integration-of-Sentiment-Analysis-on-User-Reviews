@@ -1,0 +1,243 @@
+{
+  "caitlin": [
+    {
+      "book_name": "Daughter of No Worlds",
+      "predicted_rating": 5.0,
+      "sentiment_score": 1.0,
+      "ranking_score": 4.4,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1577198904i/49826643.jpg"
+    },
+    {
+      "book_name": "Mother of Death & Dawn",
+      "predicted_rating": 3.808,
+      "sentiment_score": 5.0,
+      "ranking_score": 3.987,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1638162097i/58303345.jpg"
+    }
+  ],
+  "Rosie": [
+    {
+      "book_name": "Mother of Death & Dawn",
+      "predicted_rating": 4.722,
+      "sentiment_score": 5.0,
+      "ranking_score": 4.763,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1638162097i/58303345.jpg"
+    },
+    {
+      "book_name": "The Serpent and the Wings of Night",
+      "predicted_rating": 4.79,
+      "sentiment_score": 3.456,
+      "ranking_score": 4.59,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1711665394i/60714999.jpg"
+    },
+    {
+      "book_name": "Daughter of No Worlds",
+      "predicted_rating": 5.0,
+      "sentiment_score": 1.0,
+      "ranking_score": 4.4,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1577198904i/49826643.jpg"
+    }
+  ],
+  "amina": [
+    {
+      "book_name": "Slaying the Vampire Conqueror",
+      "predicted_rating": 5.0,
+      "sentiment_score": 2.723,
+      "ranking_score": 4.658,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1679927142i/123368729.jpg"
+    },
+    {
+      "book_name": "Mother of Death & Dawn",
+      "predicted_rating": 3.791,
+      "sentiment_score": 5.0,
+      "ranking_score": 3.972,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1638162097i/58303345.jpg"
+    },
+    {
+      "book_name": "Daughter of No Worlds",
+      "predicted_rating": 4.064,
+      "sentiment_score": 1.0,
+      "ranking_score": 3.604,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1577198904i/49826643.jpg"
+    },
+    {
+      "book_name": "Children of Fallen Gods",
+      "predicted_rating": 2.612,
+      "sentiment_score": 2.248,
+      "ranking_score": 2.558,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1592514703i/52617662.jpg"
+    }
+  ],
+  "Lolina ⋆": [
+    {
+      "book_name": "Mother of Death & Dawn",
+      "predicted_rating": 5.0,
+      "sentiment_score": 1.0,
+      "ranking_score": 4.4,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1638162097i/58303345.jpg"
+    },
+    {
+      "book_name": "Six Scorched Roses",
+      "predicted_rating": 3.844,
+      "sentiment_score": 5.0,
+      "ranking_score": 4.017,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1711665498i/123027751.jpg"
+    }
+  ],
+  "Denise": [
+    {
+      "book_name": "Mother of Death & Dawn",
+      "predicted_rating": 5.0,
+      "sentiment_score": 5.0,
+      "ranking_score": 5.0,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1638162097i/58303345.jpg"
+    },
+    {
+      "book_name": "The Ashes & the Star-Cursed King",
+      "predicted_rating": 3.327,
+      "sentiment_score": 1.0,
+      "ranking_score": 2.978,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1711665192i/62335396.jpg"
+    }
+  ],
+  "Lexi": [
+    {
+      "book_name": "Six Scorched Roses",
+      "predicted_rating": 4.706,
+      "sentiment_score": 5.0,
+      "ranking_score": 4.75,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1711665498i/123027751.jpg"
+    },
+    {
+      "book_name": "The Ashes & the Star-Cursed King",
+      "predicted_rating": 5.0,
+      "sentiment_score": 1.0,
+      "ranking_score": 4.4,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1711665192i/62335396.jpg"
+    }
+  ],
+  "Liz": [
+    {
+      "book_name": "Daughter of No Worlds",
+      "predicted_rating": 5.0,
+      "sentiment_score": 1.0,
+      "ranking_score": 4.4,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1577198904i/49826643.jpg"
+    },
+    {
+      "book_name": "Mother of Death & Dawn",
+      "predicted_rating": 4.079,
+      "sentiment_score": 3.737,
+      "ranking_score": 4.028,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1638162097i/58303345.jpg"
+    },
+    {
+      "book_name": "Six Scorched Roses",
+      "predicted_rating": 2.527,
+      "sentiment_score": 5.0,
+      "ranking_score": 2.898,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1711665498i/123027751.jpg"
+    }
+  ],
+  "April": [
+    {
+      "book_name": "The Serpent and the Wings of Night",
+      "predicted_rating": 5.0,
+      "sentiment_score": 1.0,
+      "ranking_score": 4.4,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1711665394i/60714999.jpg"
+    },
+    {
+      "book_name": "Mother of Death & Dawn",
+      "predicted_rating": 3.534,
+      "sentiment_score": 5.0,
+      "ranking_score": 3.754,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1638162097i/58303345.jpg"
+    }
+  ],
+  "Bianca": [
+    {
+      "book_name": "Mother of Death & Dawn",
+      "predicted_rating": 5.0,
+      "sentiment_score": 5.0,
+      "ranking_score": 5.0,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1638162097i/58303345.jpg"
+    },
+    {
+      "book_name": "Children of Fallen Gods",
+      "predicted_rating": 4.278,
+      "sentiment_score": 1.0,
+      "ranking_score": 3.787,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1592514703i/52617662.jpg"
+    },
+    {
+      "book_name": "Slaying the Vampire Conqueror",
+      "predicted_rating": 3.683,
+      "sentiment_score": 1.69,
+      "ranking_score": 3.384,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1679927142i/123368729.jpg"
+    }
+  ],
+  "alexandra": [
+    {
+      "book_name": "Daughter of No Worlds",
+      "predicted_rating": 5.0,
+      "sentiment_score": 1.0,
+      "ranking_score": 4.4,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1577198904i/49826643.jpg"
+    },
+    {
+      "book_name": "Mother of Death & Dawn",
+      "predicted_rating": 4.079,
+      "sentiment_score": 5.0,
+      "ranking_score": 4.217,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1638162097i/58303345.jpg"
+    }
+  ],
+  "Christina": [
+    {
+      "book_name": "The Ashes & the Star-Cursed King",
+      "predicted_rating": 5.0,
+      "sentiment_score": 1.0,
+      "ranking_score": 4.4,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1711665192i/62335396.jpg"
+    },
+    {
+      "book_name": "The Songbird & the Heart of Stone",
+      "predicted_rating": 2.885,
+      "sentiment_score": 5.0,
+      "ranking_score": 3.202,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1712408400i/210134467.jpg"
+    },
+    {
+      "book_name": "Realm of Darkness",
+      "predicted_rating": 2.855,
+      "sentiment_score": 5.0,
+      "ranking_score": 3.177,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1631228331i/58960133.jpg"
+    },
+    {
+      "book_name": "Flirting with Darkness",
+      "predicted_rating": 2.516,
+      "sentiment_score": 2.841,
+      "ranking_score": 2.565,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1666057755i/63028973.jpg"
+    }
+  ],
+  "jess": [
+    {
+      "book_name": "Slaying the Vampire Conqueror",
+      "predicted_rating": 5.0,
+      "sentiment_score": 5.0,
+      "ranking_score": 5.0,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1679927142i/123368729.jpg"
+    },
+    {
+      "book_name": "Children of Fallen Gods",
+      "predicted_rating": 4.392,
+      "sentiment_score": 1.0,
+      "ranking_score": 3.883,
+      "cover_url": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1592514703i/52617662.jpg"
+    }
+  ]
+}

@@ -23,6 +23,7 @@ Dataset: Goodreads Book Reviews of Carissa Broadbent
 import os
 import re
 import string
+import json
 import pickle
 import logging
 from pathlib import Path
@@ -102,7 +103,7 @@ class DataLoader:
           - Convert reviews to string
           - Remove reviews with fewer than MIN_WORD_COUNT words
           - Keep only English‑language reviews
-          - Remove rows with 'No tittle' book names
+          - Remove rows with 'No title' book names
           - Drop duplicate rows
         """
         log.info("Loading dataset from %s", self.file_path)
@@ -121,7 +122,7 @@ class DataLoader:
         df = df[df["language"] == "en"]
 
         # Remove placeholder titles
-        df = df[df["book_names"] != "No tittle"]
+        df = df[df["book_names"] != "No title"]
 
         # Deduplication
         before = len(df)
@@ -274,7 +275,7 @@ class SentimentAnalyzer:
 
     def __init__(self, random_state: int = RANDOM_STATE):
         self.random_state = random_state
-        self.vectorizer: CountVectorizer | None = None
+        self.vectorizer = TfidfVectorizer()
         self.model: KNeighborsClassifier | None = None
         self.word_vectorizer: TfidfVectorizer | None = None
 
@@ -332,19 +333,23 @@ class SentimentAnalyzer:
         X = df["clean_text"]
         y = df["sentiment_label"]
         X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=0.1, shuffle=True, random_state=self.random_state
+            X, y, test_size=0.2, shuffle=True, random_state=self.random_state
         )
         X_train = X_train.fillna("")
         X_test = X_test.fillna("")
         log.info("Train size: %d | Test size: %d", len(X_train), len(X_test))
 
         # Step 5: Count Vectorizer
-        self.vectorizer = CountVectorizer()
+        self.vectorizer = TfidfVectorizer(
+            max_features=10000,
+            ngram_range=(1,2),
+            stop_words='english'
+        )
         X_train_vec = self.vectorizer.fit_transform(X_train)
         X_test_vec = self.vectorizer.transform(X_test)
 
         # Step 6: SMOTE oversampling
-        smote = SMOTE(random_state=self.random_state)
+        smote = SMOTE(k_neighbors=3, random_state=self.random_state)
         X_train_res, y_train_res = smote.fit_resample(X_train_vec, y_train)
 
         # Step 7: Find optimal K
@@ -362,9 +367,12 @@ class SentimentAnalyzer:
         log.info("Best K = %d (accuracy = %.4f)", best_k, max(accuracies))
 
         # Step 8: Train final model
-        self.model = KNeighborsClassifier(n_neighbors=best_k).fit(
-            X_train_res, y_train_res
-        )
+        self.model = KNeighborsClassifier(
+                        n_neighbors=best_k,
+                        metric='cosine',
+                        weights='distance'
+                    )
+        self.model.fit(X_train_res, y_train_res)
 
         # Evaluate
         y_pred_test = self.model.predict(X_test_vec)
@@ -373,6 +381,10 @@ class SentimentAnalyzer:
         # Store references for later
         self._X_train = X_train
         self._rated_dataset = rated
+        
+        # Save metrics for dynamic retrieval
+        y_pred_test = self.model.predict(X_test_vec)
+        self.last_metrics = self._evaluate(y_test, y_pred_test, label="Test")
 
         return dataset
 
@@ -406,7 +418,7 @@ class SentimentAnalyzer:
         combined = combined.dropna(subset=["sentiment"])
         combined = combined.drop_duplicates(subset=["cleaned_reviews"])
         combined.reset_index(drop=True, inplace=True)
-        combined = combined[combined["book_names"] != "No tittle"]
+        combined = combined[combined["book_names"] != "No title"]
 
         log.info("Full prediction dataset: %d rows", len(combined))
         return combined
@@ -423,11 +435,11 @@ class SentimentAnalyzer:
     # ---- evaluation helpers ----
     @staticmethod
     def _evaluate(y_true, y_pred, label: str = ""):
-        """Print classification metrics."""
+        """Print classification metrics and return them."""
         cm = confusion_matrix(y_true, y_pred)
         tn, fp, fn, tp = cm.ravel()
         acc = accuracy_score(y_true, y_pred)
-        f1 = f1_score(y_true, y_pred)
+        f1 = f1_score(y_true, y_pred, average='weighted')
         sensitivity = round(tp / (fn + tp), 4) if (fn + tp) > 0 else 0
         specificity = round(tn / (tn + fp), 4) if (tn + fp) > 0 else 0
 
@@ -436,7 +448,14 @@ class SentimentAnalyzer:
         log.info("F1 Score   : %.4f", f1)
         log.info("Sensitivity: %.4f", sensitivity)
         log.info("Specificity: %.4f", specificity)
-        print(classification_report(y_true, y_pred, target_names=["negative", "positive"]))
+        # print(classification_report(y_true, y_pred, target_names=["negative", "positive"]))
+        
+        return {
+            "accuracy": float(acc),
+            "f1": float(f1),
+            "sensitivity": float(sensitivity),
+            "specificity": float(specificity)
+        }
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -472,8 +491,31 @@ class RecommendationEngine:
         log.info("Building recommendation engine...")
 
         # Split
-        train, test = train_test_split(
-            dataset, test_size=0.1, random_state=self.random_state
+        def user_based_split(df, test_size=0.2, random_state=42):
+            train_list = []
+            test_list = []
+
+            for user, user_data in df.groupby("usernames"):
+                if len(user_data) < 2:
+                    train_list.append(user_data)
+                    continue
+
+                train, test = train_test_split(
+                    user_data,
+                    test_size=test_size,
+                    random_state=random_state
+                )
+
+                train_list.append(train)
+                test_list.append(test)
+
+            train_df = pd.concat(train_list)
+            test_df = pd.concat(test_list)
+
+            return train_df, test_df
+    
+        train, test = user_based_split(
+            dataset, test_size=0.2
         )
         test = test[test.usernames.isin(train.usernames)]
 
@@ -498,8 +540,26 @@ class RecommendationEngine:
         user_corr = 1 - pairwise_distances(subtracted, metric="cosine")
         user_corr = np.nan_to_num(user_corr, nan=0)
 
+        np.fill_diagonal(user_corr, 0)
+        
+        # 🔥 FILTER NOISE SIMILARITY
+        user_corr[user_corr < 0.1] = 0
+        
+        # 🔥 TOP-K NEIGHBOR (ambil hanya 20 user paling mirip)
+        TOP_K = 20
+
+        for i in range(user_corr.shape[0]):
+            idx = np.argsort(user_corr[i])[:-TOP_K]
+            user_corr[i, idx] = 0
+
         # Predicted ratings
         predicted = np.dot(user_corr, train_pivot)
+
+        sum_sim = np.abs(user_corr).sum(axis=1, keepdims=True)
+        sum_sim[sum_sim == 0] = 1
+
+        predicted = predicted / sum_sim
+
         self.user_final_rating = pd.DataFrame(
             np.multiply(predicted, dummy_train),
             index=train_pivot.index,
@@ -507,7 +567,7 @@ class RecommendationEngine:
         )
 
         # Evaluation
-        self._evaluate_recommendation(
+        self.last_metrics = self._evaluate_recommendation(
             user_corr, subtracted, train, test, train_pivot, test_pivot
         )
 
@@ -534,22 +594,26 @@ class RecommendationEngine:
         recs = pd.DataFrame(recs).reset_index()
         recs.columns = ["book_names", "predicted_ratings"]
 
+        # 🔥 REMOVE ITEM YANG SUDAH PERNAH DILIHAT USER
+        user_history = dataset[dataset["usernames"] == username]["book_names"]
+
+        recs = recs[~recs["book_names"].isin(user_history)]
+
         # Scale predicted ratings to 1–5
         scaler = MinMaxScaler(feature_range=(1, 5))
         recs["predicted_ratings"] = scaler.fit_transform(recs[["predicted_ratings"]])
 
-        # Remove zero‑prediction items
-        recs = recs[recs["predicted_ratings"] > 1.0]
+        # 🔥 BUANG REKOMENDASI DENGAN SKOR RENDAH
+        recs = recs[recs["predicted_ratings"] > 2.5]
 
-        # Add sentiment scores using CountVectorizer (same as KNN training)
-        def _get_sentiment_score(book_name: str) -> float:
-            reviews = dataset[dataset["book_names"] == book_name]["reviews"].tolist()
-            if not reviews:
-                return 0.5
-            features = sentiment_analyzer.vectorizer.transform(reviews)
-            return sentiment_analyzer.model.predict(features).mean()
+        # # Remove zero‑prediction items
+        # recs = recs[recs["predicted_ratings"] > 1.0]
 
-        recs["sentiment_score"] = recs["book_names"].apply(_get_sentiment_score)
+        # 🔥 PRECOMPUTE SENTIMENT (sekali saja)
+        book_sentiment = dataset.groupby("book_names")["sentiment_label"].mean()
+
+        # mapping ke recommendation
+        recs["sentiment_score"] = recs["book_names"].map(book_sentiment).fillna(0.5)
 
         # Normalize sentiment scores
         if len(recs) > 1:
@@ -558,11 +622,21 @@ class RecommendationEngine:
 
         # Final ranking
         recs["ranking_score"] = (
-            1 * recs["predicted_ratings"] + 2 * recs["sentiment_score"]
+            0.85 * recs["predicted_ratings"] + 0.15 * recs["sentiment_score"]
         )
         recs = recs.sort_values("ranking_score", ascending=False)
 
+            
+        # 🔥 FALLBACK jika tidak ada rekomendasi
+        if recs.empty:
+            top_books = dataset.groupby("book_names")["ratings"].mean() \
+                .sort_values(ascending=False)
+
+            recs = top_books.head(self.top_n).reset_index()
+            recs.columns = ["book_names", "predicted_ratings"]
+    
         return recs
+
 
     def save_model(self):
         """Persist the user final rating matrix."""
@@ -575,7 +649,7 @@ class RecommendationEngine:
     # ---- evaluation ----
     def _evaluate_recommendation(self, user_corr, subtracted, train, test,
                                   train_pivot, test_pivot):
-        """Calculate RMSE and MAE for the recommendation system."""
+        """Calculate RMSE and MAE for the recommendation system and return them."""
         user_corr_df = pd.DataFrame(
             user_corr, index=subtracted.index, columns=subtracted.index
         )
@@ -587,7 +661,12 @@ class RecommendationEngine:
             return
 
         corr_test = user_corr_df.loc[test_users, test_users]
-        predicted_test = np.dot(corr_test, test_pivot.reindex(test_users, fill_value=0))
+        predicted_test = np.dot(corr_test, train_pivot.reindex(test_users, fill_value=0))
+
+        sum_sim = np.abs(corr_test.values).sum(axis=1, keepdims=True)
+        sum_sim[sum_sim == 0] = 1
+
+        predicted_test = predicted_test / sum_sim
 
         # Dummy test
         dummy_test = test.copy()
@@ -606,6 +685,35 @@ class RecommendationEngine:
 
         log.info("Recommendation RMSE: %.4f", rmse)
         log.info("Recommendation MAE : %.4f", mae)
+
+        # contoh sederhana (per user)
+        for user in test_users[:10]:
+            actual = test[test["usernames"] == user]["book_names"].tolist()
+            predicted = self.user_final_rating.loc[user].sort_values(ascending=False).index.tolist()
+
+            p_at_k = self.precision_at_k(predicted, actual, k=5)
+            r_at_k = self.recall_at_k(predicted, actual, k=5)
+            hr = self.hit_rate(predicted, actual, k=5)
+
+            # print(f"{user} → P@5={p_at_k:.2f}, R@5={r_at_k:.2f}, HR={hr}")
+
+        return {
+            "rmse": float(rmse),
+            "mae": float(mae)
+        }
+
+    def precision_at_k(self, predicted, actual, k=5):
+        pred_k = predicted[:k]
+        return len(set(pred_k) & set(actual)) / k
+
+    def recall_at_k(self, predicted, actual, k=5):
+        pred_k = predicted[:k]
+        return len(set(pred_k) & set(actual)) / len(actual) if actual else 0
+
+
+    def hit_rate(self, predicted, actual, k=5):
+        pred_k = predicted[:k]
+        return int(len(set(pred_k) & set(actual)) > 0)
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -632,12 +740,57 @@ def main():
     prediction_dataset = analyzer.build_full_dataset(dataset)
     analyzer.save_models()
 
+    # 🔥 FILTER USER AKTIF (minimal 5 interaksi)
+    prediction_dataset = prediction_dataset.groupby("usernames") \
+        .filter(lambda x: len(x) >= 5)
+
+    # 🔥 FILTER ITEM POPULER
+    prediction_dataset = prediction_dataset.groupby("book_names") \
+        .filter(lambda x: len(x) >= 5)
+
     # ── Step 4: Build Recommendation Engine ──
     engine = RecommendationEngine(top_n=6)
     engine.build(prediction_dataset)
     engine.save_model()
 
-    # ── Step 5: Generate Sample Recommendations ──
+    # ── Step 5: Save Metrics for Web App ──
+    # Calculate some additional stats
+    total_reviews = len(dataset)
+    english_reviews = len(prediction_dataset)
+    unique_users = prediction_dataset["usernames"].nunique()
+    unique_books = prediction_dataset["book_names"].nunique()
+
+    # Calculate sentiment distribution
+    sent_counts = dataset["sentiment"].value_counts(normalize=True) * 100
+    sent_dist = {
+        "positive": round(sent_counts.get("positive", 0), 1),
+        "negative": round(sent_counts.get("negative", 0), 1),
+        "undecided": round(sent_counts.get("undecided", 0), 1),
+    }
+
+    # Re-evaluating for the full dataset metrics (approximate for display)
+    metrics = {
+        "knn_accuracy": analyzer.last_metrics["accuracy"],
+        "knn_f1": analyzer.last_metrics["f1"],
+        "knn_sensitivity": analyzer.last_metrics["sensitivity"],
+        "knn_specificity": analyzer.last_metrics["specificity"],
+        "rmse": engine.last_metrics["rmse"],
+        "mae": engine.last_metrics["mae"],
+        "total_reviews": int(total_reviews),
+        "english_reviews": int(english_reviews),
+        "unique_users": int(unique_users),
+        "unique_books": int(unique_books),
+        "sentiment_distribution": sent_dist
+    }
+
+    # If we want literal dynamic metrics from the run:
+    # (Note: SentimentAnalyzer evaluation handles the printing, we'd need to modify it to return values)
+    
+    with open(MODEL_DIR / "pipeline_metrics.json", "w") as f:
+        json.dump(metrics, f, indent=2)
+    log.info("Saved pipeline metrics to %s", MODEL_DIR / "pipeline_metrics.json")
+
+    # ── Step 6: Generate Sample Recommendations ──
     target_user = prediction_dataset["usernames"].value_counts().index[1]
     log.info("Generating recommendations for user: '%s'", target_user)
 

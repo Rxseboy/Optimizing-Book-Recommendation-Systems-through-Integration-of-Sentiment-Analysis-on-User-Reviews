@@ -139,6 +139,31 @@ The notebook contains detailed EDA, visualizations (word clouds, sentiment distr
 
 6. **Sentiment-Enhanced Ranking**: Combined predicted ratings with sentiment scores using a weighted formula: `Score = 1 × Predicted Rating + 2 × Sentiment Score`, producing the final recommendation list.
 
+## 🚀 Deployment
+
+The web application is designed to be lightweight and can be deployed easily:
+
+### Option 1: Hugging Face Spaces (Highly Recommended)
+1. **Create a Space**: Go to [huggingface.co/new-space](https://huggingface.co/new-space).
+2. **Setup**:
+   - Name: `book-recommendation-system` (or any name).
+   - SDK: Select **Static HTML**.
+   - Public/Private: Your choice (Public is best for portfolio).
+3. **Upload Files**:
+   - Inside your new Space, click **"Files and versions"** > **"Add file"** > **"Upload files"**.
+   - Upload all files inside the `web/` folder (`index.html`, `style.css`, `app.js`) and the `web/data/` folder.
+   - **Important**: The `index.html` must be at the root of the Space.
+4. **Done**: Your Space will build and be live in seconds!
+
+### Option 2: Vercel
+1. Push this repository to GitHub and import it to [Vercel](https://vercel.com).
+2. It will use the `vercel.json` in this repo to serve the `web/` folder.
+
+### Option 3: Local Development
+```bash
+python -m http.server -d web 8000
+```
+
 ## 📄 License
 
 This project is part of an academic thesis (Tugas Akhir). See the `docs/` directory for the related IEEE conference paper and thesis proposal.

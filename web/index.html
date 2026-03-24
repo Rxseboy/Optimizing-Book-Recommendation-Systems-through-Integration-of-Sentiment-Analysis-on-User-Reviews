@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NovelSense – Sentiment-Based Book Recommendation System</title>
+  <meta name="description" content="Sentiment-Based Book Recommendation System integrating KNN sentiment analysis on Goodreads reviews with collaborative filtering. Built by Rizqi Fajar." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ═══════════════════════════ NAV ═══════════════════════════ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="#hero" class="logo-link">
+      <i class="fa-solid fa-book-open-reader"></i>
+      <span>NovelSense</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#pipeline">Pipeline</a></li>
+      <li><a href="#metrics">Results</a></li>
+      <li><a href="#catalog">Catalog</a></li>
+      <li><a href="#recommend">Demo</a></li>
+    </ul>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-particles" id="particles"></div>
+  <div class="hero-content">
+    <span class="hero-badge"><i class="fa-solid fa-flask"></i> Research Project · Machine Learning</span>
+    <h1>Sentiment-Powered<br /><em>Book Recommendations</em></h1>
+    <p class="hero-sub">
+      Integrating <strong>KNN sentiment analysis</strong> on 18,984 Goodreads reviews with
+      <strong>user–user collaborative filtering</strong> to produce smarter, feeling-aware recommendations.
+    </p>
+    <div class="hero-kpi" id="heroKPI">
+      <div class="kpi-item"><span class="kpi-n" data-target="18984">0</span><span class="kpi-l">Reviews</span></div>
+      <div class="kpi-item"><span class="kpi-n" data-target="9872">0</span><span class="kpi-l">Users</span></div>
+      <div class="kpi-item"><span class="kpi-n" data-target="13">0</span><span class="kpi-l">Books</span></div>
+      <div class="kpi-item"><span class="kpi-n kpi-pct" data-target="91.42">0</span><span class="kpi-l">KNN Accuracy</span></div>
+    </div>
+    <div class="hero-cta">
+      <a href="#catalog" class="btn-primary">Explore Catalog <i class="fa-solid fa-arrow-down"></i></a>
+      <a href="#recommend" class="btn-ghost">Live Demo <i class="fa-solid fa-wand-magic-sparkles"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ PIPELINE ═══════════════════════════ -->
+<section class="section pipeline-section" id="pipeline">
+  <div class="container">
+    <div class="section-hd">
+      <h2>The Intelligence Pipeline</h2>
+      <p>Five stages transform raw Goodreads reviews into sentiment-enhanced recommendations</p>
+    </div>
+    <div class="pipeline-track">
+
+      <div class="pipe-step" data-step="1">
+        <div class="pipe-num">01</div>
+        <div class="pipe-icon"><i class="fa-solid fa-database"></i></div>
+        <h3>Data Loading &amp; Cleaning</h3>
+        <p>Language detection with <code>langdetect</code>, word-count filter, deduplication. English-only reviews of Carissa Broadbent books are retained.</p>
+        <div class="pipe-chip"><i class="fa-solid fa-check"></i> 18,984 → 12,439 reviews</div>
+      </div>
+
+      <div class="pipe-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+
+      <div class="pipe-step" data-step="2">
+        <div class="pipe-num">02</div>
+        <div class="pipe-icon"><i class="fa-solid fa-language"></i></div>
+        <h3>NLP Preprocessing</h3>
+        <p>Lowercase → contraction expansion → noise removal → tokenization → stopword removal → multi-pass lemmatization via <code>NLTK</code>.</p>
+        <div class="pipe-chip"><i class="fa-solid fa-check"></i> Clean text + nouns extracted</div>
+      </div>
+
+      <div class="pipe-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+
+      <div class="pipe-step" data-step="3">
+        <div class="pipe-num">03</div>
+        <div class="pipe-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+        <h3>Sentiment Analysis</h3>
+        <p>KNN classifier on <code>CountVectorizer</code> features · SMOTE oversampling · optimal K search · predicts sentiment for 'No Rating' reviews.</p>
+        <div class="pipe-chip accent"><i class="fa-solid fa-star"></i> 91.42% Accuracy · F1 0.91</div>
+      </div>
+
+      <div class="pipe-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+
+      <div class="pipe-step pipe-step--last" data-step="4">
+        <div class="pipe-num">04</div>
+        <div class="pipe-icon"><i class="fa-solid fa-users"></i></div>
+        <h3>Collaborative Filtering</h3>
+        <p>User–user cosine similarity matrix · top-20 neighbour selection · mean-centred predicted ratings. Filters active users (≥5 interactions).</p>
+        <div class="pipe-chip"><i class="fa-solid fa-check"></i> RMSE 0.68 · MAE 0.42</div>
+      </div>
+
+      <div class="pipe-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+
+      <div class="pipe-step pipe-step--glow" data-step="5">
+        <div class="pipe-num">05</div>
+        <div class="pipe-icon"><i class="fa-solid fa-trophy"></i></div>
+        <h3>Hybrid Ranking</h3>
+        <p>Final score: <code>0.85 × predicted_rating + 0.15 × sentiment_score</code>. Items already seen by the user are excluded, fallback to global top books.</p>
+        <div class="pipe-chip accent"><i class="fa-solid fa-star"></i> Top-6 personalised picks</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ METRICS ═══════════════════════════ -->
+<section class="section metrics-section" id="metrics">
+  <div class="container">
+    <div class="section-hd">
+      <h2>Model Performance</h2>
+      <p>Evaluation results from the trained KNN classifier and collaborative filtering engine</p>
+    </div>
+    <div class="metrics-grid">
+      <div class="metric-card glow-card">
+        <div class="mc-icon"><i class="fa-solid fa-bullseye"></i></div>
+        <div class="mc-val" id="mc-acc">91.42<span class="mc-unit">%</span></div>
+        <div class="mc-label">KNN Accuracy</div>
+        <div class="mc-sub">Sentiment Classification</div>
+      </div>
+      <div class="metric-card">
+        <div class="mc-icon"><i class="fa-solid fa-sliders"></i></div>
+        <div class="mc-val" id="mc-f1">0.9133</div>
+        <div class="mc-label">F1 Score</div>
+        <div class="mc-sub">Weighted average</div>
+      </div>
+      <div class="metric-card">
+        <div class="mc-icon"><i class="fa-solid fa-eye"></i></div>
+        <div class="mc-val" id="mc-sens">0.9273</div>
+        <div class="mc-label">Sensitivity</div>
+        <div class="mc-sub">True Positive Rate</div>
+      </div>
+      <div class="metric-card">
+        <div class="mc-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <div class="mc-val" id="mc-spec">0.9013</div>
+        <div class="mc-label">Specificity</div>
+        <div class="mc-sub">True Negative Rate</div>
+      </div>
+      <div class="metric-card">
+        <div class="mc-icon"><i class="fa-solid fa-ruler"></i></div>
+        <div class="mc-val" id="mc-rmse">0.6841</div>
+        <div class="mc-label">CF RMSE</div>
+        <div class="mc-sub">Collaborative Filtering</div>
+      </div>
+      <div class="metric-card">
+        <div class="mc-icon"><i class="fa-solid fa-chart-bar"></i></div>
+        <div class="mc-val" id="mc-mae">0.4217</div>
+        <div class="mc-label">CF MAE</div>
+        <div class="mc-sub">Mean Absolute Error</div>
+      </div>
+    </div>
+
+    <!-- Sentiment distribution bar -->
+    <div class="sentiment-vis">
+      <h3>Sentiment Distribution in Dataset</h3>
+      <div class="sent-bars">
+        <div class="sent-bar-wrap">
+          <div class="sent-label">Positive</div>
+          <div class="sent-track"><div class="sent-fill sent-pos" style="width:0%" data-w="68"></div></div>
+          <div class="sent-pct">68%</div>
+        </div>
+        <div class="sent-bar-wrap">
+          <div class="sent-label">Negative</div>
+          <div class="sent-track"><div class="sent-fill sent-neg" style="width:0%" data-w="14"></div></div>
+          <div class="sent-pct">14%</div>
+        </div>
+        <div class="sent-bar-wrap">
+          <div class="sent-label">No Rating</div>
+          <div class="sent-track"><div class="sent-fill sent-nr" style="width:0%" data-w="18"></div></div>
+          <div class="sent-pct">18%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ CATALOG ═══════════════════════════ -->
+<section class="section catalog-section" id="catalog">
+  <div class="container">
+    <div class="section-hd">
+      <h2>Analyzed Book Catalog</h2>
+      <p>All 13 Carissa Broadbent titles present in the Goodreads dataset</p>
+    </div>
+
+    <div class="filter-row">
+      <button class="fbtn active" data-filter="all">All <span class="fbtn-count" id="count-all">13</span></button>
+      <button class="fbtn" data-filter="Crowns of Nyaxia">Crowns of Nyaxia</button>
+      <button class="fbtn" data-filter="The War of Lost Hearts">War of Lost Hearts</button>
+      <button class="fbtn" data-filter="standalone">Standalones</button>
+    </div>
+
+    <div id="catalog-loader" class="loader-box">
+      <div class="spin"></div><p>Loading catalog…</p>
+    </div>
+    <div class="books-grid" id="booksGrid"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ DEMO ═══════════════════════════ -->
+<section class="section demo-section" id="recommend">
+  <div class="container">
+    <div class="section-hd">
+      <h2>Live Recommendation Demo</h2>
+      <p>Powered by the <em>real</em> trained model — select a real user from the dataset to see their personalised top-6</p>
+    </div>
+
+    <div class="demo-layout">
+      <!-- Controls -->
+      <div class="demo-ctrl glass-panel">
+        <h3><i class="fa-solid fa-user-gear"></i> Select User</h3>
+        <p class="demo-info">These are actual users from the Goodreads dataset used to train the model.</p>
+        <div class="user-chips" id="userChips">
+          <!-- Populated by JS -->
+        </div>
+        <div class="algo-explain">
+          <h4>Ranking Formula</h4>
+          <div class="formula">
+            <code>score = <span class="fv">0.85</span> × pred_rating + <span class="fv">0.15</span> × sentiment</code>
+          </div>
+          <ul class="algo-list">
+            <li><i class="fa-solid fa-circle text-gold"></i> <strong>pred_rating</strong>: user–user cosine CF (top-20 neighbours)</li>
+            <li><i class="fa-solid fa-circle text-green"></i> <strong>sentiment</strong>: mean KNN prediction across all reviews of that book</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div class="demo-results" id="demoResults">
+        <div class="empty-state" id="demoEmpty">
+          <i class="fa-solid fa-robot"></i>
+          <p>Pick a user on the left to load their recommendations.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+<footer>
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <i class="fa-solid fa-book-open-reader"></i> NovelSense
+    </div>
+    <div class="footer-copy">
+      <p>Sentiment-Based Book Recommendation System</p>
+      <p>By <strong>Rizqi Fajar</strong> · Dataset: Goodreads – Carissa Broadbent · NLP + Collaborative Filtering</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════ MODAL ═══════════════════════════ -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-box glass-panel">
+    <button class="modal-close" id="modalClose"><i class="fa-solid fa-xmark"></i></button>
+    <div class="modal-layout">
+      <div class="modal-left">
+        <img id="mImg" src="" alt="Book cover" />
+        <div class="modal-goodreads">
+          <a id="mLink" href="#" target="_blank" rel="noopener">
+            <i class="fa-brands fa-goodreads"></i> View on Goodreads
+          </a>
+        </div>
+        <div class="modal-dataset-stats">
+          <h4>Dataset Insights</h4>
+          <div class="ds-row"><span class="ds-k">Reviews in dataset</span><span class="ds-v" id="mRevCount">–</span></div>
+          <div class="ds-row"><span class="ds-k">Unique reviewers</span><span class="ds-v" id="mReviewers">–</span></div>
+        </div>
+      </div>
+      <div class="modal-right">
+        <div class="modal-series" id="mSeries"></div>
+        <h2 id="mTitle"></h2>
+        <p class="modal-author" id="mAuthor"></p>
+        <div class="modal-meta">
+          <div class="meta-pill"><i class="fa-solid fa-star"></i><span id="mRating">–</span></div>
+          <div class="meta-pill"><i class="fa-regular fa-file-lines"></i><span id="mPages">– pages</span></div>
+          <div class="meta-pill"><i class="fa-regular fa-calendar"></i><span id="mPub">–</span></div>
+        </div>
+        <div class="modal-genres" id="mGenres"></div>
+        <div class="modal-desc">
+          <h4>Synopsis</h4>
+          <p id="mDesc"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
