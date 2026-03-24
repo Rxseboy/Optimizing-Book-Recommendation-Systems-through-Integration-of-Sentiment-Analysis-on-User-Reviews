@@ -7,7 +7,7 @@ A machine learning pipeline that integrates **Sentiment Analysis** of Goodreads 
 **Check out the live interactive application on Hugging Face Spaces:**  
 👉 **[NovelSense - Book Recommendation System](https://huggingface.co/spaces/RizqiFajar/Book-Recommendation-System)**
 
-![NovelSense Hero Section](./web/assets/hero_section.png)
+![NovelSense Hero Section](./docs/assets/hero_section.png)
 
 ## 📋 Objective
 
@@ -83,13 +83,13 @@ Traditional recommendation systems rely solely on numerical ratings, ignoring th
 ## 🖼️ Application Preview
 
 ### The Intelligence Pipeline
-![Pipeline Section](./web/assets/pipeline_overview.png)
+![Pipeline Section](./docs/assets/pipeline_overview.png)
 
 ### Model Performance
-![Metrics Section](./web/assets/performance_metrics.png)
+![Metrics Section](./docs/assets/performance_metrics.png)
 
 ### Live Recommendation Demo
-![Demo Section](./web/assets/recommendation_demo.png)
+![Demo Section](./docs/assets/recommendation_demo.png)
 
 ## 📁 Project Structure
 
