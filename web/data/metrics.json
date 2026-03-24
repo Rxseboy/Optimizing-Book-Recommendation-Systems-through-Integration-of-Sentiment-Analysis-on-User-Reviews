@@ -4,14 +4,14 @@
   "knn_sensitivity": 0.7986,
   "knn_specificity": 0.9172,
   "rmse": 1.24993375403406,
-  "mae": 0.44827431485612007,
+  "mae": 0.4482743148561201,
   "total_reviews": 16598,
   "english_reviews": 3312,
   "unique_users": 349,
   "unique_books": 11,
   "sentiment_distribution": {
-    "positive": 81.7,
-    "negative": 4.3,
-    "undecided": 14.0
+    "positive": 50.0,
+    "negative": 50.0,
+    "undecided": 0
   }
 }

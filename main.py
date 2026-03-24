@@ -278,6 +278,7 @@ class SentimentAnalyzer:
         self.vectorizer = TfidfVectorizer()
         self.model: KNeighborsClassifier | None = None
         self.word_vectorizer: TfidfVectorizer | None = None
+        self.balanced_dist: dict = {}
 
     # ---- sentiment encoding ----
     @staticmethod
@@ -339,7 +340,7 @@ class SentimentAnalyzer:
         X_test = X_test.fillna("")
         log.info("Train size: %d | Test size: %d", len(X_train), len(X_test))
 
-        # Step 5: Count Vectorizer
+        # Step 5: TF-IDF Vectorizer
         self.vectorizer = TfidfVectorizer(
             max_features=10000,
             ngram_range=(1,2),
@@ -373,6 +374,14 @@ class SentimentAnalyzer:
                         weights='distance'
                     )
         self.model.fit(X_train_res, y_train_res)
+
+        # Capture balanced distribution for display
+        res_counts = y_train_res.value_counts(normalize=True) * 100
+        self.balanced_dist = {
+            "positive": round(res_counts.get(1, 0), 1),
+            "negative": round(res_counts.get(0, 0), 1),
+            "undecided": 0  # Balanced training set has no undecided
+        }
 
         # Evaluate
         y_pred_test = self.model.predict(X_test_vec)
@@ -760,13 +769,9 @@ def main():
     unique_users = prediction_dataset["usernames"].nunique()
     unique_books = prediction_dataset["book_names"].nunique()
 
-    # Calculate sentiment distribution
-    sent_counts = dataset["sentiment"].value_counts(normalize=True) * 100
-    sent_dist = {
-        "positive": round(sent_counts.get("positive", 0), 1),
-        "negative": round(sent_counts.get("negative", 0), 1),
-        "undecided": round(sent_counts.get("undecided", 0), 1),
-    }
+    # Calculate sentiment distribution from the BALANCED training set
+    # (Shows how the model sees the world after SMOTE/Undersampling)
+    sent_dist = analyzer.balanced_dist
 
     # Re-evaluating for the full dataset metrics (approximate for display)
     metrics = {
